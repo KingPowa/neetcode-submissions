@@ -1,0 +1,24 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+
+        def rightSideViewRecurs(node, depth):
+            if node is None:
+                return []
+            else:
+                while depth >= len(res):
+                    res.append([])
+                res[depth].append(node.val)
+
+            left_rightSideView = rightSideViewRecurs(node.left, depth + 1)
+            right_rightSideView = rightSideViewRecurs(node.right, depth + 1)
+        
+        rightSideViewRecurs(root, 0)
+        return [r[-1] for r in res]
